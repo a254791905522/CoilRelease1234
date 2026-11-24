@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Notice — CoilRelease</title>
+    <meta name="description" content="Privacy notice for CoilRelease: usage data, advertising data, tracking, and the choices available to players and families.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky: #2b82ee;
+            --sky-deep: #1766c9;
+            --spring: #ffc227;
+            --lime: #63c227;
+            --cream: #fff8ee;
+            --ink: #243044;
+            --muted: #556176;
+            --flag: #ff8a1e;
+            --pipe: #7b5cff;
+            --cyan: #2ec4e6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Nunito", "Trebuchet MS", sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+            line-height: 1.6;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(255, 196, 120, 0.7), transparent 32%),
+                radial-gradient(circle at 100% 100%, rgba(130, 186, 255, 0.75), transparent 36%),
+                linear-gradient(165deg, #ffe7c8 0%, #f3d4ff 50%, #c5e4ff 100%);
+            padding: 22px 16px 56px;
+        }
+
+        .wrap { max-width: 820px; margin: 0 auto; }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-bottom: 18px;
+            padding: 10px 14px;
+            background: rgba(255, 248, 238, 0.82);
+            border: 3px solid rgba(43, 130, 238, 0.35);
+            border-radius: 999px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--ink);
+            font-family: "Fredoka", sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #6eb6ff, var(--sky-deep));
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12), 0 4px 0 #1457ad;
+            position: relative;
+        }
+
+        .mark::after {
+            content: "";
+            position: absolute;
+            left: 9px;
+            top: 8px;
+            width: 18px;
+            height: 18px;
+            border: 3px solid var(--spring);
+            border-radius: 50%;
+            border-right-color: transparent;
+            transform: rotate(28deg);
+        }
+
+        .top nav { display: flex; gap: 8px; }
+
+        .top nav a {
+            text-decoration: none;
+            color: var(--sky-deep);
+            font-weight: 800;
+            font-size: 0.92rem;
+            padding: 8px 14px;
+            border-radius: 999px;
+        }
+
+        .top nav a[aria-current="page"] { background: var(--sky); color: white; }
+
+        a:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
+
+        .sheet {
+            background: var(--cream);
+            border: 6px solid var(--sky);
+            border-radius: 28px;
+            padding: 32px 28px 28px;
+            box-shadow: 0 14px 0 rgba(23, 102, 201, 0.16);
+        }
+
+        .kicker {
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: var(--sky-deep);
+        }
+
+        h1 {
+            font-family: "Fredoka", sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            line-height: 1.15;
+            margin: 8px 0 10px;
+        }
+
+        .when { color: var(--muted); font-weight: 800; margin-bottom: 18px; }
+
+        .glance {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .glance article {
+            border-radius: 16px;
+            padding: 12px 12px 10px;
+            font-weight: 800;
+            font-size: 0.92rem;
+        }
+
+        .glance strong { display: block; font-family: "Fredoka", sans-serif; font-size: 1rem; margin-bottom: 4px; }
+        .glance p { font-weight: 700; line-height: 1.4; }
+        .g1 { background: #e7f6ff; color: #144e86; }
+        .g2 { background: #fff4d4; color: #6a4a08; }
+        .g3 { background: #e9fbe0; color: #24520f; }
+
+        h2 {
+            font-family: "Fredoka", sans-serif;
+            font-size: 1.28rem;
+            margin: 22px 0 8px;
+        }
+
+        p, li { color: var(--muted); font-weight: 700; }
+        p + p { margin-top: 8px; }
+
+        .scroll { overflow-x: auto; margin: 8px 0 4px; }
+        .plate { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .plate th, .plate td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid #efe2cf;
+            vertical-align: top;
+        }
+        .plate th {
+            background: var(--sky);
+            color: white;
+            font-family: "Fredoka", sans-serif;
+            font-weight: 600;
+        }
+        .plate td { color: var(--ink); font-weight: 700; }
+        .plate tr:last-child td { border-bottom: none; }
+
+        .bay {
+            margin-top: 14px;
+            padding: 4px 0 4px 16px;
+            border-left: 8px solid var(--sky);
+        }
+        .bay:nth-of-type(1) { border-left-color: var(--cyan); }
+        .bay:nth-of-type(2) { border-left-color: var(--spring); }
+        .bay:nth-of-type(3) { border-left-color: var(--flag); }
+        .bay:nth-of-type(4) { border-left-color: var(--pipe); }
+        .bay:nth-of-type(5) { border-left-color: var(--lime); }
+        .bay:nth-of-type(6) { border-left-color: #ff7aa8; }
+
+        ul { margin: 8px 0 0 1.1rem; }
+        li { margin: 4px 0; }
+
+        .ask {
+            margin-top: 22px;
+            background: #eef6ff;
+            border-radius: 18px;
+            padding: 16px 16px 14px;
+        }
+
+        .ask a { color: var(--sky-deep); font-weight: 800; }
+
+        .back {
+            display: inline-block;
+            margin-top: 16px;
+            font-weight: 800;
+            color: var(--sky-deep);
+        }
+
+        @media (max-width: 720px) {
+            .glance { grid-template-columns: 1fr; }
+            .sheet { padding: 22px 16px; }
+            .top { border-radius: 22px; }
+            .plate { min-width: 520px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header class="top">
+            <a class="brand" href="index.html">
+                <span class="mark" aria-hidden="true"></span>
+                CoilRelease
+            </a>
+            <nav aria-label="Pages">
+                <a href="index.html">The game</a>
+                <a href="privacy.html" aria-current="page">Privacy</a>
+            </nav>
+        </header>
+
+        <article class="sheet">
+            <p class="kicker">Factory data plate</p>
+            <h1>How CoilRelease handles information</h1>
+            <p class="when">Effective 24 November 2026 · iPhone, iPad, and other Apple devices that can install the game</p>
+
+            <div class="glance">
+                <article class="g1">
+                    <strong>Usage data</strong>
+                    <p>Disclosed as linked to you, and as data that may be used to track.</p>
+                </article>
+                <article class="g2">
+                    <strong>Advertising data</strong>
+                    <p>Disclosed as data that may be used to track across other companies’ apps and sites.</p>
+                </article>
+                <article class="g3">
+                    <strong>No player profile</strong>
+                    <p>A chamber does not ask for your name, email address, or home address.</p>
+                </article>
+            </div>
+
+            <p>
+                This notice describes the free puzzle game CoilRelease. It follows the categories on the game’s App Store privacy label: usage data and advertising data. The label also states that the game contains advertising. If a future build changes those categories, the label and this notice should be read together, with the label on the store listing as the store-facing disclosure for that version.
+            </p>
+
+            <h2>Data plate</h2>
+            <div class="scroll">
+            <table class="plate">
+                <thead>
+                    <tr>
+                        <th>Signal</th>
+                        <th>Linked to you</th>
+                        <th>Used to track</th>
+                        <th>Why it is used</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Usage data</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>Understand how chambers are played, keep the game operating, and support advertising measurement.</td>
+                    </tr>
+                    <tr>
+                        <td>Advertising data</td>
+                        <td>Not listed as linked</td>
+                        <td>Yes</td>
+                        <td>Deliver ads in a free game and measure or tailor them where the platform and your choices allow.</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <p>
+                The same label does not list contact details, precise location, health information, financial information, contacts, or user content as data collected by CoilRelease. Puzzle progress for the core loop is kept with the app on the device. The game does not require an account before the first chamber.
+            </p>
+
+            <section class="bay">
+                <h2>Ads on the floor</h2>
+                <p>
+                    CoilRelease is free and shows advertising. Usage data and advertising data may be used to track you across apps and websites owned by other companies. That is the meaning of the tracking disclosure on the App Store: the data can be connected with third-party data for advertising or measurement, not only used inside this game.
+                </p>
+                <p>
+                    Ad networks that serve those placements receive the signals they need to fill and measure an ad. They handle that information under their own rules as well as this notice. Which partners appear can change between versions, so this page names the category — advertising and measurement partners — rather than a fixed vendor list. A personalized ad is available only when Apple’s tracking prompt, your device settings, and any age-related limits allow it. Otherwise the game can still show ads that are not tied to tracking.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>What a session includes</h2>
+                <p>
+                    Playing means releasing coils, spending lives, and collecting keys. Those gameplay events can show up inside usage data: for example, that a session happened, how far a run progressed, or whether the app remained stable. They are product signals, not a social profile. CoilRelease does not ask you to type a name, build a public handle, or upload a photo to solve a level.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>Apple’s side of the machine</h2>
+                <p>
+                    Apple distributes the download and updates. Apple may process purchase and account data for your Apple ID, optional diagnostic and crash reports you enable, device backups, and the tracking permission stored on the device. Those systems follow Apple’s policies and the switches in Settings. CoilRelease does not replace Screen Time, Ask to Buy, or App Tracking Transparency.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>How long signals stay</h2>
+                <p>
+                    Usage and advertising signals are retained only for as long as they are needed to run the game, measure it, serve and account for ads, and meet legal duties. Advertising partners keep what they receive on their own schedules. Resetting the advertising identifier in iOS or iPadOS cuts the thread between future ad requests and the previous identifier. Removing the app deletes the local game data stored by that installation; it does not, by itself, erase copies already held by an ad partner.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>Families and younger players</h2>
+                <p>
+                    The App Store age rating is 4+, and the listing states that the game contains advertising. CoilRelease is a puzzle about springs and flags. It does not ask a child to register, enter an email address, or join a chat. Guardians decide whether the game is appropriate and can limit installs, purchases, and tracking with Apple’s family controls.
+                </p>
+                <p>
+                    The publisher does not knowingly collect a child’s name or contact details through the game. If you believe a child has sent personal information in connection with CoilRelease, use the support path on the App Store listing so the request can be reviewed.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>Choices you can use today</h2>
+                <ul>
+                    <li>Settings → Privacy &amp; Security → Tracking — control whether CoilRelease may ask to track your activity across other companies’ apps and sites.</li>
+                    <li>Settings → Privacy &amp; Security → Apple Advertising — control personalized ads on Apple’s own advertising surfaces.</li>
+                    <li>Reset the advertising identifier if you want later ad requests to start from a new identifier.</li>
+                    <li>Where local law gives you a right to access, correct, delete, export, object, or restrict personal information, or to opt out of sale or sharing, send that request through the App Store listing for this game.</li>
+                </ul>
+                <p>
+                    This website is a static notice. It does not run a form, does not set its own account, and does not publish a personal email address or street address. Product questions and privacy requests both go through the listing linked below.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>Across borders</h2>
+                <p>
+                    Advertising and measurement partners may process signals in countries other than the one where you play. Where the law requires a safeguard for that transfer, the publisher and those partners rely on the mechanisms available for the service, such as contractual clauses. The practical way to limit tracking remains the device control described above.
+                </p>
+            </section>
+
+            <section class="bay">
+                <h2>When this plate is revised</h2>
+                <p>
+                    A new version, a new ad feature, or a change in law can change what the game handles. When the categories change in a way that matters, this page will be updated and the date at the top will move with it. The App Store privacy details for the installed version remain the disclosure shown at download.
+                </p>
+            </section>
+
+            <div class="ask">
+                <h2>Reach the game</h2>
+                <p>
+                    Support and privacy requests for CoilRelease are handled from the App Store product page.
+                    <a href="https://apps.apple.com/us/app/coilrelease/id6823516232?uo=4" target="_blank" rel="noopener noreferrer">Open CoilRelease on the App Store</a>.
+                </p>
+            </div>
+            <a class="back" href="index.html">Back to the game</a>
+        </article>
+    </div>
+</body>
+</html>

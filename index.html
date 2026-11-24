@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoilRelease — Factory Coil Puzzles</title>
+    <meta name="description" content="CoilRelease is a colorful factory puzzle. Release golden coils inside metal chambers, hit the blue flags, and earn three keys without overshooting.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky: #2b82ee;
+            --sky-deep: #1766c9;
+            --spring: #ffc227;
+            --spring-deep: #e09400;
+            --lime: #63c227;
+            --cream: #fff8ee;
+            --ink: #243044;
+            --muted: #556176;
+            --flag: #ff8a1e;
+            --pipe: #7b5cff;
+            --blush: #ff7aa8;
+            --cyan: #2ec4e6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Nunito", "Trebuchet MS", sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 8% 12%, rgba(255, 184, 214, 0.85), transparent 28%),
+                radial-gradient(circle at 92% 8%, rgba(160, 214, 255, 0.9), transparent 26%),
+                linear-gradient(180deg, #ffe4bf 0%, #f6d2ff 46%, #b9defe 100%);
+            padding: 22px 16px 48px;
+        }
+
+        .pipes { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .pipes span {
+            position: absolute;
+            width: 42px;
+            border-radius: 22px;
+            opacity: 0.38;
+        }
+        .pipes span:nth-child(1) { left: 4%; top: -40px; height: 70%; background: linear-gradient(#f0b44a, #e0892a); }
+        .pipes span:nth-child(2) { right: 6%; top: 10%; height: 80%; background: linear-gradient(#8a6bff, #5b46d6); }
+        .pipes span:nth-child(3) { left: 18%; bottom: -80px; height: 40%; background: linear-gradient(#5ec8ff, #2b82ee); }
+
+        .wrap { max-width: 980px; margin: 0 auto; position: relative; z-index: 1; }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-bottom: 18px;
+            padding: 10px 14px;
+            background: rgba(255, 248, 238, 0.82);
+            border: 3px solid rgba(43, 130, 238, 0.35);
+            border-radius: 999px;
+            backdrop-filter: blur(6px);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--ink);
+            font-family: "Fredoka", sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: 0.01em;
+        }
+
+        .mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #6eb6ff, var(--sky-deep));
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12), 0 4px 0 #1457ad;
+            position: relative;
+        }
+
+        .mark::after {
+            content: "";
+            position: absolute;
+            left: 9px;
+            top: 8px;
+            width: 18px;
+            height: 18px;
+            border: 3px solid var(--spring);
+            border-radius: 50%;
+            border-right-color: transparent;
+            transform: rotate(28deg);
+        }
+
+        .top nav { display: flex; gap: 8px; }
+
+        .top nav a {
+            text-decoration: none;
+            color: var(--sky-deep);
+            font-weight: 800;
+            font-size: 0.92rem;
+            padding: 8px 14px;
+            border-radius: 999px;
+        }
+
+        .top nav a[aria-current="page"] {
+            background: var(--sky);
+            color: white;
+        }
+
+        .top nav a:focus-visible,
+        .btn:focus-visible,
+        .brand:focus-visible {
+            outline: 3px solid var(--flag);
+            outline-offset: 2px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 12px;
+            align-items: center;
+            background:
+                radial-gradient(circle at 18px 18px, #e7f2ff 5px, #9ec4f3 6px, transparent 7px),
+                radial-gradient(circle at calc(100% - 18px) 18px, #e7f2ff 5px, #9ec4f3 6px, transparent 7px),
+                radial-gradient(circle at 18px calc(100% - 18px), #e7f2ff 5px, #9ec4f3 6px, transparent 7px),
+                radial-gradient(circle at calc(100% - 18px) calc(100% - 18px), #e7f2ff 5px, #9ec4f3 6px, transparent 7px),
+                var(--cream);
+            border: 6px solid var(--sky);
+            border-radius: 32px;
+            padding: 34px 32px 28px;
+            box-shadow: 0 16px 0 rgba(23, 102, 201, 0.18);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e7f4ff;
+            color: var(--sky-deep);
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-family: "Fredoka", sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.1rem, 5vw, 3.4rem);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--sky-deep);
+        }
+
+        .lead {
+            font-size: 1.08rem;
+            line-height: 1.65;
+            color: var(--muted);
+            max-width: 38rem;
+        }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+        .chips span {
+            background: white;
+            border: 2px solid #d7e4f5;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-weight: 800;
+            font-size: 0.86rem;
+            color: var(--ink);
+        }
+
+        .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-family: "Fredoka", sans-serif;
+            font-weight: 600;
+            border-radius: 16px;
+            padding: 14px 18px;
+            min-height: 52px;
+        }
+
+        .btn-go {
+            background: linear-gradient(#8be04a, var(--lime));
+            color: #14340a;
+            box-shadow: 0 5px 0 #3d8e12;
+        }
+
+        .btn-go:hover { transform: translateY(-1px); }
+
+        .btn-soft {
+            background: white;
+            color: var(--sky-deep);
+            border: 3px solid #b9d6fb;
+        }
+
+        .stage { display: grid; place-items: center; }
+
+        .stage svg { width: min(100%, 280px); height: auto; filter: drop-shadow(0 12px 0 rgba(23, 102, 201, 0.12)); }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .stage svg { animation: bob 3.6s ease-in-out infinite; }
+        }
+
+        @keyframes bob {
+            50% { transform: translateY(-8px); }
+        }
+
+        .meters {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .meter {
+            background: rgba(255, 248, 238, 0.9);
+            border-radius: 22px;
+            padding: 16px 16px 14px;
+            border: 3px solid transparent;
+        }
+
+        .meter:nth-child(1) { border-color: #ffb0c8; }
+        .meter:nth-child(2) { border-color: #ffd36a; }
+        .meter:nth-child(3) { border-color: #9fd0ff; }
+
+        .meter b {
+            display: block;
+            font-family: "Fredoka", sans-serif;
+            font-size: 1.7rem;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .meter span { color: var(--muted); font-weight: 700; font-size: 0.92rem; line-height: 1.4; }
+
+        section.play { margin-top: 28px; }
+
+        section.play h2,
+        .later h2 {
+            font-family: "Fredoka", sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 6px;
+        }
+
+        .section-lead { color: var(--muted); font-weight: 700; margin-bottom: 14px; max-width: 40rem; }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .step {
+            background: var(--cream);
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+            border: 4px solid #d5e6f8;
+        }
+
+        .step:nth-child(1) { border-color: var(--cyan); }
+        .step:nth-child(2) { border-color: var(--spring); }
+        .step:nth-child(3) { border-color: var(--flag); }
+        .step:nth-child(4) { border-color: var(--pipe); }
+
+        .num {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-family: "Fredoka", sans-serif;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .step:nth-child(1) .num { background: var(--cyan); }
+        .step:nth-child(2) .num { background: var(--spring-deep); }
+        .step:nth-child(3) .num { background: var(--flag); }
+        .step:nth-child(4) .num { background: var(--pipe); }
+
+        .step h3 { font-family: "Fredoka", sans-serif; font-size: 1.15rem; margin-bottom: 6px; }
+        .step p { color: var(--muted); font-weight: 700; line-height: 1.5; }
+
+        .later {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 12px;
+        }
+
+        .card {
+            border-radius: 22px;
+            padding: 20px;
+        }
+
+        .card p { margin-top: 8px; line-height: 1.55; font-weight: 700; }
+
+        .warn { background: #fff1e4; color: #6a3410; }
+        .linkup { background: #efe9ff; color: #3a2a78; }
+        .warn p, .linkup p { color: inherit; }
+
+        .foot {
+            margin-top: 22px;
+            text-align: center;
+            color: #3d4d66;
+            font-weight: 800;
+            font-size: 0.92rem;
+        }
+
+        .foot a { color: var(--sky-deep); }
+
+        @media (max-width: 800px) {
+            .hero, .later, .steps, .meters { grid-template-columns: 1fr; }
+            .stage { order: -1; }
+            .hero { padding: 22px 18px; }
+            .top { border-radius: 22px; }
+            .cta { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="pipes" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="wrap">
+        <header class="top">
+            <a class="brand" href="index.html">
+                <span class="mark" aria-hidden="true"></span>
+                CoilRelease
+            </a>
+            <nav aria-label="Pages">
+                <a href="index.html" aria-current="page">The game</a>
+                <a href="privacy.html">Privacy</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div>
+                <p class="eyebrow">Puzzle · Casual · Free</p>
+                <h1>Release the coil.<br><em>Catch the flag.</em></h1>
+                <p class="lead">
+                    CoilRelease is a bright factory puzzle. Each level is a riveted metal chamber. Tap a colored node on the rim, send a golden spring racing along the inside, and lock it onto the blue flag. The path is short. The margin for error is shorter.
+                </p>
+                <div class="chips">
+                    <span>Spatial chambers</span>
+                    <span>Golden springs</span>
+                    <span>Colored release nodes</span>
+                    <span>iPhone &amp; iPad</span>
+                </div>
+                <div class="cta">
+                    <a class="btn btn-go" href="https://apps.apple.com/us/app/coilrelease/id6823516232?uo=4" target="_blank" rel="noopener noreferrer">Download on the App Store</a>
+                    <a class="btn btn-soft" href="privacy.html">Privacy notice</a>
+                </div>
+            </div>
+            <div class="stage">
+                <svg viewBox="0 0 280 320" role="img" aria-label="A golden coil standing on a blue factory flange beside an orange flag">
+                    <ellipse cx="146" cy="268" rx="92" ry="24" fill="#1766c9"/>
+                    <ellipse cx="146" cy="258" rx="78" ry="18" fill="#3c93f5"/>
+                    <circle cx="86" cy="258" r="6" fill="#d7e9ff"/>
+                    <circle cx="146" cy="266" r="6" fill="#d7e9ff"/>
+                    <circle cx="206" cy="258" r="6" fill="#d7e9ff"/>
+                    <rect x="28" y="168" width="46" height="36" rx="8" fill="#63c227"/>
+                    <rect x="62" y="178" width="22" height="16" rx="4" fill="#8be04a"/>
+                    <path d="M78 196 C78 176 214 176 214 156 C214 136 78 136 78 116 C78 96 214 96 214 76 C214 58 150 48 120 48" fill="none" stroke="#e09400" stroke-width="22" stroke-linecap="round"/>
+                    <path d="M78 190 C78 174 208 174 208 156 C208 140 84 140 84 118 C84 100 208 100 208 80 C208 64 156 56 128 54" fill="none" stroke="#ffc227" stroke-width="14" stroke-linecap="round"/>
+                    <path d="M92 184 C110 170 150 170 168 184" fill="none" stroke="#fff1b8" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+                    <path d="M100 124 C118 110 156 110 174 124" fill="none" stroke="#fff1b8" stroke-width="4" stroke-linecap="round" opacity="0.75"/>
+                    <line x1="214" y1="92" x2="214" y2="150" stroke="#c56a12" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M214 96 l28 12 -28 12 z" fill="#ff8a1e"/>
+                </svg>
+            </div>
+        </section>
+
+        <div class="meters">
+            <article class="meter">
+                <b>3 lives</b>
+                <span>Miss the length or the route and the chamber calls Overshoot. Three misses wind the machine down.</span>
+            </article>
+            <article class="meter">
+                <b>3 keys</b>
+                <span>A precise clear can award every golden key on the stage. Sloppy paths leave keys behind.</span>
+            </article>
+            <article class="meter">
+                <b>Linked rooms</b>
+                <span>Later floors join chambers with pipes and valves, so one release has to serve more than one flag.</span>
+            </article>
+        </div>
+
+        <section class="play">
+            <h2>How a chamber works</h2>
+            <p class="section-lead">Four beats. No timer shouting at you — just the shape of the metal and the spring you choose to let go.</p>
+            <div class="steps">
+                <article class="step">
+                    <div class="num">1</div>
+                    <h3>Read the pocket</h3>
+                    <p>Look at the riveted outline, the blue flags, and the colored nodes parked on the rim. The coil only travels the interior.</p>
+                </article>
+                <article class="step">
+                    <div class="num">2</div>
+                    <h3>Pick a node</h3>
+                    <p>Tap a release node. The golden spring unwinds from that point and traces a path toward a flag.</p>
+                </article>
+                <article class="step">
+                    <div class="num">3</div>
+                    <h3>Stop on the flag</h3>
+                    <p>The spring should lock onto the blue target. Too long, or the wrong bend, and the shot is an Overshoot.</p>
+                </article>
+                <article class="step">
+                    <div class="num">4</div>
+                    <h3>Bank the keys</h3>
+                    <p>Clean sequencing fills the key row. Spend the three lives wisely — a drained meter restarts the whole level.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="later">
+            <article class="card warn">
+                <h2>Overshoot is the whole lesson</h2>
+                <p>Power is easy. Stopping is the puzzle. If the coil runs past the flag or takes a bend that never meets it, you lose a life and the spring snaps back. The factory does not give partial credit for almost.</p>
+            </article>
+            <article class="card linkup">
+                <h2>Pipes change the math</h2>
+                <p>Deeper stages split the machine into stacked chambers. Valves and pipes tie them together, so you plan several coils and several flags in one sequence. The goal stays the same: three golden keys, machine still running.</p>
+            </article>
+        </section>
+
+        <p class="foot">
+            CoilRelease · factory puzzle for iPhone and iPad · rated 4+ · contains ads<br>
+            <a href="https://apps.apple.com/us/app/coilrelease/id6823516232?uo=4" target="_blank" rel="noopener noreferrer">App Store listing</a>
+            · <a href="privacy.html">Privacy notice</a>
+        </p>
+    </div>
+</body>
+</html>
